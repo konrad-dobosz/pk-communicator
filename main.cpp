@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "socketservice.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    SocketService s = SocketService();
+
     return a.exec();
 }

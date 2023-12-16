@@ -11,29 +11,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    _socket(this)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
-    connect(&_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-    //connect(do kogo wysyłasz, co tam uruchamiasz, to co wysyłasz, co właczasz tutaj jak to wysyłasz )
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::onReadyRead()
-{
-    QByteArray datas = _socket.readAll();
-    qDebug() << datas;
-    //_socket.write(QByteArray("ok !\n"));
-}
-
-
-
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -44,8 +30,7 @@ void MainWindow::on_pushButton_clicked()
         QByteArray messageData = message.toUtf8();
 
         // Wysyłanie wiadomości do serwera
-        _socket.write(messageData);
-        _socket.waitForBytesWritten();
+        emit sendMessage(messageData);
 
         // Obsługa własnej wysłanej wiadomości
         ui->textBrowser->append("You: " + message);
