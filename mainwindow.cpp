@@ -33,12 +33,16 @@ void MainWindow::on_pushButton_clicked()
         emit sendMessage(messageData);
 
         // Obsługa własnej wysłanej wiadomości
+        //appendMessage(message);
         ui->textBrowser->append("You: " + message);
     }
     else
     {
         qDebug() << "Wiadomość jest pusta!";
     }
+}
 
+void MainWindow::appendMessage(QString &message) {
+    ui->textBrowser->append("Someone: " + message);
 }
 

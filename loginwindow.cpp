@@ -15,6 +15,7 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_pushButton_clicked()
 {
-    emit login();
+    QString username = "Username";
+    QString password = "Password";
+    emit login(username, password);
 }
-

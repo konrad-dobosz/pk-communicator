@@ -1,5 +1,19 @@
 #include "socketservice.h"
 
+QDataStream &operator<< (QDataStream &ds, SocketDataType data) {
+    return ds << (quint8)data;
+}
+
+QDataStream &operator>> (QDataStream &ds, SocketDataType data) {
+    quint8 val;
+    ds >> val;
+    if (ds.status() == QDataStream::Ok) {
+        data = SocketDataType(val);
+    }
+
+    return ds;
+}
+
 SocketService::SocketService(QObject *parent):
     QObject(parent),
     _socket(this),
@@ -10,24 +24,62 @@ SocketService::SocketService(QObject *parent):
     _loginw.show();
 
     connect(&_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-    connect(&_loginw, SIGNAL(login()), this, SLOT(onLogin()));
+    connect(&_loginw, SIGNAL(login(QString&, QString&)), this, SLOT(onLogin(QString&, QString&)));
     connect(&_mainw, SIGNAL(sendMessage(QByteArray&)), this, SLOT(onSendMessage(QByteArray&)));
 }
 
-void SocketService::onLogin() {
+void SocketService::onLogin(QString& username, QString& password) {
     _socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
-    _loginw.hide();
-    _mainw.show();
+
+    QByteArray data = QByteArray(username.toUtf8());
+    write(_socket, data, SocketDataType::loginRequest);
 }
 
 void SocketService::onReadyRead() {
-    QByteArray datas = _socket.readAll();
-    qDebug() << datas;
-    //_socket.write(QByteArray("ok !\n"));
-    //ui->textBrowser->append(datas);
+    QTcpSocket* sender = static_cast<QTcpSocket*>(QObject::sender());
+    QDataStream readStream(sender);
+
+    quint16 sizeRead;
+    quint8 type;
+    QByteArray msg;
+
+    readStream >> sizeRead;
+
+    if (sender->bytesAvailable() < sizeRead) return;
+
+    readStream >> type;
+    readStream >> msg;
+
+    QString message = QString(msg);
+
+    switch (SocketDataType(type)) {
+    case SocketDataType::loginResponse:
+        qDebug() << "LR";
+        _loginw.hide();
+        _mainw.show();
+        break;
+    case SocketDataType::message:
+        qDebug() << "MSG";
+        _mainw.appendMessage(message);
+        break;
+    default:
+        qDebug() << "Got someting else?";
+        break;
+    }
 }
 
-void SocketService::onSendMessage(QByteArray &data) {
-    _socket.write(data);
-    _socket.waitForBytesWritten();
+void SocketService::write(QTcpSocket &socket, QByteArray &data, SocketDataType type) {
+    QByteArray streamData;
+    QDataStream writeStream(&streamData, QIODevice::WriteOnly);
+    writeStream <<  quint16(0) << type;
+    writeStream << data;
+    writeStream.device()->seek(0);
+    writeStream << quint16(streamData.size() - sizeof(quint16));
+
+    socket.write(streamData);
+    socket.waitForBytesWritten();
+}
+
+void SocketService::onSendMessage(QByteArray &msg_data) {
+    write(_socket, msg_data, SocketDataType::message);
 }

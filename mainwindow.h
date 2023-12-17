@@ -15,6 +15,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void appendMessage(QString &message);
+
 signals:
     void sendMessage(QByteArray &data);
 

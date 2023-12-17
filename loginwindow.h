@@ -16,7 +16,7 @@ public:
     ~LoginWindow();
 
 signals:
-    void login();
+    void login(QString& username, QString& password);
 
 private slots:
     void on_pushButton_clicked();
