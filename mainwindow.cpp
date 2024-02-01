@@ -1,4 +1,7 @@
 #include "mainwindow.h"
+#include "addfriendwindow.h"
+#include "chatwindow.h"
+#include "settingswindow.h"
 #include "ui_mainwindow.h"
 
 #include <QDebug>
@@ -21,28 +24,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    QString message = ui->plainTextEdit->toPlainText(); // Pobierz wiadomość z pola tekstowego
+    ChatWindow *chatWindow = new ChatWindow();
 
-    if (!message.isEmpty())
-    {
-        QByteArray messageData = message.toUtf8();
+    chatWindow->show();
+}
 
-        // Wysyłanie wiadomości do serwera
-        emit sendMessage(messageData);
+void MainWindow::on_btn_settings_clicked()
+{
+    SettingsData data;
+    SettingsWindow *settingsWindow = new SettingsWindow(data);
 
-        // Obsługa własnej wysłanej wiadomości
-        //appendMessage(message);
-        ui->textBrowser->append("You: " + message);
-    }
-    else
-    {
-        qDebug() << "Wiadomość jest pusta!";
+    if (settingsWindow->exec()) {
+        emit updateSettings(data);
     }
 }
 
-void MainWindow::appendMessage(QString &message) {
-    ui->textBrowser->append("Someone: " + message);
+void MainWindow::on_btn_add_friend_clicked()
+{
+    AddFriendData data;
+    AddFriendWindow *addFriendWindow = new AddFriendWindow(data);
+
+    if (addFriendWindow->exec()) {
+        emit addFriend(data.friendIP);
+    }
 }
 

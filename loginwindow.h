@@ -17,9 +17,12 @@ public:
 
 signals:
     void login(QString& username, QString& password);
+    void register_user(QString& username, QString& password);
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_register_clicked();
 
 private:
     Ui::LoginWindow *ui;

@@ -2,18 +2,15 @@
 #define SOCKETSERVICE_H
 
 #include <QObject>
+#include <QWidget>
+
+#include <QTcpServer>
 #include <QTcpSocket>
 
+#include "chatwindow.h"
 #include "mainwindow.h"
 #include "loginwindow.h"
-
-enum class SocketDataType: quint8 {
-    loginRequest,
-    loginResponse,
-    message
-};
-
-Q_DECLARE_METATYPE(SocketDataType);
+#include "socketdata/socketdata.h"
 
 class SocketService : QObject
 {
@@ -21,11 +18,11 @@ class SocketService : QObject
 public:
     SocketService(QObject *parent = nullptr);
 
-    void write(QTcpSocket &socket, QByteArray &data, SocketDataType type);
+    void write(QTcpSocket &socket, SocketData &data);
 
 public slots:
     void onReadyRead();
-    void onSendMessage(QByteArray &data);
+    void onSendMessage(SocketMessage &msg);
 
 private slots:
     void onLogin(QString&, QString&);
@@ -34,6 +31,7 @@ private:
     QTcpSocket _socket;
     MainWindow _mainw;
     LoginWindow _loginw;
+    ChatWindow _chatw;
 };
 
 #endif // SOCKETSERVICE_H

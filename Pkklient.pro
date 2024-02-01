@@ -10,19 +10,36 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addfriendwindow.cpp \
+    chatwindow.cpp \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    socketservice.cpp
+    settingswindow.cpp \
+    socketdata/socketdata.cpp \
+    socketdata/socketlogin.cpp \
+    socketdata/socketmessage.cpp \
+    socketservice.cpp \
+    socketuser.cpp
 
 HEADERS += \
+    addfriendwindow.h \
+    chatwindow.h \
     loginwindow.h \
     mainwindow.h \
-    socketservice.h
+    settingswindow.h \
+    socketdata/socketdata.h \
+    socketdata/socketlogin.h \
+    socketdata/socketmessage.h \
+    socketservice.h \
+    socketuser.h
 
 FORMS += \
+    addfriendwindow.ui \
+    chatwindow.ui \
     loginwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    settingswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

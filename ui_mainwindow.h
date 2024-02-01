@@ -11,12 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,9 +26,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QPlainTextEdit *plainTextEdit;
-    QPushButton *pushButton;
-    QTextBrowser *textBrowser;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QPushButton *btn_settings;
+    QListWidget *listWidget;
+    QPushButton *btn_add_friend;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -35,22 +38,36 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->resize(289, 377);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        plainTextEdit = new QPlainTextEdit(centralwidget);
-        plainTextEdit->setObjectName("plainTextEdit");
-        plainTextEdit->setGeometry(QRect(220, 70, 251, 131));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(500, 130, 80, 24));
-        textBrowser = new QTextBrowser(centralwidget);
-        textBrowser->setObjectName("textBrowser");
-        textBrowser->setGeometry(QRect(210, 220, 256, 192));
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName("gridLayout");
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName("verticalLayout");
+        btn_settings = new QPushButton(centralwidget);
+        btn_settings->setObjectName("btn_settings");
+
+        verticalLayout->addWidget(btn_settings);
+
+        listWidget = new QListWidget(centralwidget);
+        new QListWidgetItem(listWidget);
+        listWidget->setObjectName("listWidget");
+
+        verticalLayout->addWidget(listWidget);
+
+        btn_add_friend = new QPushButton(centralwidget);
+        btn_add_friend->setObjectName("btn_add_friend");
+
+        verticalLayout->addWidget(btn_add_friend);
+
+
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 289, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -63,8 +80,16 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Wy\305\233lij", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Komunikator", nullptr));
+        btn_settings->setText(QCoreApplication::translate("MainWindow", "Ustawienia", nullptr));
+
+        const bool __sortingEnabled = listWidget->isSortingEnabled();
+        listWidget->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
+        ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Test user", nullptr));
+        listWidget->setSortingEnabled(__sortingEnabled);
+
+        btn_add_friend->setText(QCoreApplication::translate("MainWindow", "Dodaj znajomego", nullptr));
     } // retranslateUi
 
 };

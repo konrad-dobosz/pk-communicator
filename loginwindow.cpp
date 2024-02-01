@@ -15,7 +15,15 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_pushButton_clicked()
 {
-    QString username = "Username";
-    QString password = "Password";
+    QString username = ui->lineEdit_username->text();
+    QString password = ui->lineEdit_password->text();
     emit login(username, password);
 }
+
+void LoginWindow::on_pushButton_register_clicked()
+{
+    QString username = ui->lineEdit_username->text();
+    QString password = ui->lineEdit_password->text();
+    emit register_user(username, password);
+}
+
