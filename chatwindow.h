@@ -15,7 +15,7 @@ class ChatWindow : public QDialog
 public:
     explicit ChatWindow(QWidget *parent = nullptr);
     ~ChatWindow();
-    void appendMessage(QString &username, QString &message);
+    void appendMessage(QString username, QString message);
 
 signals:
     void sendMessage(SocketMessage &msg);

@@ -32,7 +32,7 @@ void ChatWindow::on_pushButton_clicked()
     }
 }
 
-void ChatWindow::appendMessage(QString &username, QString &message) {
+void ChatWindow::appendMessage(QString username, QString message) {
     QDateTime date;
     date = date.currentDateTime();
 

@@ -43,13 +43,11 @@ void SocketService::onReadyRead() {
 
     } else if (SocketDataType(type) == SocketDataType::message) {
         qDebug() << "MSG";
-        QByteArray msg;
+        SocketMessage data;
 
-        readStream >> msg;
+        readStream >> data;
 
-        QString message = QString(msg);
-        QString username = "Ktoś";
-        _chatw.appendMessage(username, message);
+        _chatw.appendMessage(data.getUsername(), data.getMessage());
 
     }
 }
