@@ -3,12 +3,15 @@
 
 SocketService::SocketService(QObject *parent):
     QObject(parent),
-    _socket(this),
-    _mainw(MainWindow()),
+    _socket(QTcpSocket()),
+    _mainw(MainWindow(&_chatw)),
     _loginw(LoginWindow()),
     _chatw(ChatWindow())
 {
+    _socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
+
     _loginw.show();
+    _mainw.show();
 
     connect(&_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(&_loginw, SIGNAL(login(QString&,QString&)), this, SLOT(onLogin(QString&,QString&)));
@@ -28,15 +31,15 @@ void SocketService::onReadyRead() {
 
     readStream >> type;
 
+    qDebug() << "TYPE READ: " << type;
+
     if (SocketDataType(type) == SocketDataType::loginResponse) {
-        SocketLogin sl;
-        QString test;
+        //SocketLogin sl;
 
-        readStream >> test;
-        qDebug() << test;
+        qDebug() << "Login Response";
 
-        _loginw.hide();
-        _mainw.show();
+        //_loginw.hide();
+        //_mainw.show();
 
     } else if (SocketDataType(type) == SocketDataType::message) {
         qDebug() << "MSG";
@@ -59,16 +62,16 @@ void SocketService::write(QTcpSocket &socket, SocketData &data) {
     writeStream.device()->seek(0);
     writeStream << quint16(streamData.size() - sizeof(quint16));
 
+    qDebug() << "WRITE TYPE: " << (int)data.type();
+
     socket.write(streamData);
     socket.waitForBytesWritten();
 }
 
 void SocketService::onLogin(QString& username, QString& password) {
-    _socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
+    //_socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
 
     SocketLogin sLogin = SocketLogin(username, password);
-
-    qDebug() << "U: " << sLogin.getUsername() << ", P: " << sLogin.getPassword();
     write(_socket, sLogin);
 }
 

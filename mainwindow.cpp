@@ -5,16 +5,11 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
-#include <QHostAddress>
-#include <QAbstractSocket>
-#include <QtNetwork>
-#include <QTcpServer>
-#include <QTcpSocket>
 
-
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(ChatWindow *chatw, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    _chatw(chatw)
 {
     ui->setupUi(this);
 }
@@ -26,9 +21,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    ChatWindow *chatWindow = new ChatWindow();
-
-    chatWindow->show();
+    _chatw->show();
 }
 
 void MainWindow::on_btn_settings_clicked()

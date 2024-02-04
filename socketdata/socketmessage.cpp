@@ -1,19 +1,18 @@
 #include "socketmessage.h"
 
-QDataStream &operator<< (QDataStream &ds, SocketMessage &data) {
-    return ds << data.getMessage();
-}
-
 SocketMessage::SocketMessage () {}
+SocketMessage::SocketMessage (QString &message) : _message(message) {}
 
 SocketDataType SocketMessage::type() {
     return SocketDataType::message;
 }
 
-QString SocketMessage::getMessage() {
-    return message;
+QDataStream& SocketMessage::readStream(QDataStream &ds) {
+    ds >> _message;
+    return ds;
 }
 
-void SocketMessage::setMessage(QString &msg) {
-    this->message = msg;
+QDataStream& SocketMessage::writeStream(QDataStream &ds) {
+    ds << _message;
+    return ds;
 }

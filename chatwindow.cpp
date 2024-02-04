@@ -19,12 +19,9 @@ void ChatWindow::on_pushButton_clicked()
 
     if (!message.isEmpty())
     {
-        SocketMessage msg;
+        SocketMessage msg(message);
 
         emit sendMessage(msg);
-
-        QDateTime date;
-        date = date.currentDateTime();
 
         QString username = "Ty";
         appendMessage(username, message);

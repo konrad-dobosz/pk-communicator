@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "chatwindow.h"
 #include "qlistwidget.h"
 #include "settingswindow.h"
 #include "socketdata/socketmessage.h"
@@ -15,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(ChatWindow *chatw, QWidget *parent = 0);
     ~MainWindow();
 
 signals:
@@ -31,6 +32,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    ChatWindow *_chatw;
 };
 
 #endif // MAINWINDOW_H

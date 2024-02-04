@@ -1,21 +1,5 @@
 #include "socketlogin.h"
-
-QDataStream &operator<< (QDataStream &ds, SocketLogin &data) {
-    return ds << data.getUsername() << data.getPassword();
-}
-
-QDataStream &operator>> (QDataStream &ds, SocketLogin &data) {
-    QString username;
-    QString password;
-    ds >> username;
-    ds >> password;
-    if (ds.status() == QDataStream::Ok) {
-        data.setUsername(username);
-        data.setPassword(password);
-    }
-
-    return ds;
-}
+#include "qdebug.h"
 
 SocketLogin::SocketLogin() {}
 
@@ -39,4 +23,17 @@ void SocketLogin::setPassword(QString &password) {
 
 SocketDataType SocketLogin::type() {
     return SocketDataType::loginRequest;
+}
+
+QDataStream& SocketLogin::readStream(QDataStream &ds) {
+    if (ds.status() == QDataStream::Ok) {
+        ds >> username;
+        ds >> password;
+    }
+    return ds;
+}
+
+QDataStream& SocketLogin::writeStream(QDataStream &ds) {
+    ds << username << password;
+    return ds;
 }
