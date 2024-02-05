@@ -12,10 +12,13 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QListWidget>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -27,10 +30,19 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
+    QLabel *label_2;
+    QLineEdit *lineEdit_username;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *label_3;
+    QLineEdit *lineEdit_serverIp;
+    QVBoxLayout *verticalLayout_3;
+    QSpacerItem *verticalSpacer;
+    QLabel *label;
+    QLineEdit *lineEdit_friendIp;
+    QPushButton *btn_write;
     QPushButton *btn_settings;
-    QListWidget *listWidget;
-    QPushButton *btn_add_friend;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -38,31 +50,75 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(289, 377);
+        MainWindow->resize(289, 290);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName("gridLayout");
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName("label_2");
+
+        verticalLayout->addWidget(label_2);
+
+        lineEdit_username = new QLineEdit(centralwidget);
+        lineEdit_username->setObjectName("lineEdit_username");
+
+        verticalLayout->addWidget(lineEdit_username);
+
+
+        horizontalLayout->addLayout(verticalLayout);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName("label_3");
+
+        verticalLayout_2->addWidget(label_3);
+
+        lineEdit_serverIp = new QLineEdit(centralwidget);
+        lineEdit_serverIp->setObjectName("lineEdit_serverIp");
+
+        verticalLayout_2->addWidget(lineEdit_serverIp);
+
+
+        horizontalLayout->addLayout(verticalLayout_2);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName("verticalLayout_3");
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer);
+
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+
+        verticalLayout_3->addWidget(label);
+
+        lineEdit_friendIp = new QLineEdit(centralwidget);
+        lineEdit_friendIp->setObjectName("lineEdit_friendIp");
+
+        verticalLayout_3->addWidget(lineEdit_friendIp);
+
+        btn_write = new QPushButton(centralwidget);
+        btn_write->setObjectName("btn_write");
+
+        verticalLayout_3->addWidget(btn_write);
+
+
+        gridLayout->addLayout(verticalLayout_3, 1, 0, 1, 1);
+
         btn_settings = new QPushButton(centralwidget);
         btn_settings->setObjectName("btn_settings");
+        btn_settings->setEnabled(false);
 
-        verticalLayout->addWidget(btn_settings);
-
-        listWidget = new QListWidget(centralwidget);
-        new QListWidgetItem(listWidget);
-        listWidget->setObjectName("listWidget");
-
-        verticalLayout->addWidget(listWidget);
-
-        btn_add_friend = new QPushButton(centralwidget);
-        btn_add_friend->setObjectName("btn_add_friend");
-
-        verticalLayout->addWidget(btn_add_friend);
-
-
-        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+        gridLayout->addWidget(btn_settings, 2, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -81,15 +137,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Komunikator", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Nazwa u\305\274ytkownika", nullptr));
+        lineEdit_username->setText(QCoreApplication::translate("MainWindow", "Student1", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Adres IP serwera", nullptr));
+        lineEdit_serverIp->setText(QCoreApplication::translate("MainWindow", "127.0.0.1", nullptr));
+        lineEdit_serverIp->setPlaceholderText(QCoreApplication::translate("MainWindow", "Np.: 127.0.0.1", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Adres IP drugiej instancji", nullptr));
+        lineEdit_friendIp->setText(QCoreApplication::translate("MainWindow", "127.0.0.1", nullptr));
+        lineEdit_friendIp->setPlaceholderText(QCoreApplication::translate("MainWindow", "Np.: 127.0.0.1", nullptr));
+        btn_write->setText(QCoreApplication::translate("MainWindow", "Pisz", nullptr));
         btn_settings->setText(QCoreApplication::translate("MainWindow", "Ustawienia", nullptr));
-
-        const bool __sortingEnabled = listWidget->isSortingEnabled();
-        listWidget->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
-        ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Test user", nullptr));
-        listWidget->setSortingEnabled(__sortingEnabled);
-
-        btn_add_friend->setText(QCoreApplication::translate("MainWindow", "Dodaj znajomego", nullptr));
     } // retranslateUi
 
 };

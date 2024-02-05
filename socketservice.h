@@ -23,6 +23,7 @@ public:
 public slots:
     void onReadyRead();
     void onSendMessage(SocketMessage &msg);
+    void onConnectToFriend(QString username, QHostAddress serverIp, QHostAddress friendIp);
 
 private slots:
     void onLogin(QString&, QString&);

@@ -19,28 +19,40 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+//void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+//{
+//    _chatw->show();
+//}
+
+//void MainWindow::on_btn_settings_clicked()
+//{
+//    SettingsData data;
+//    SettingsWindow *settingsWindow = new SettingsWindow(data);
+
+//    if (settingsWindow->exec()) {
+//        emit updateSettings(data);
+//    }
+//}
+
+//void MainWindow::on_btn_add_friend_clicked()
+//{
+//    AddFriendData data;
+//    AddFriendWindow *addFriendWindow = new AddFriendWindow(data);
+
+//    if (addFriendWindow->exec()) {
+//        emit addFriend(data.friendIP);
+//    }
+//}
+
+
+void MainWindow::on_btn_write_clicked()
 {
+    //_chatw->setFriendIpAddress(QHostAddress("::ffff:" + ui->lineEdit_friendip->text()));
+    emit connectToFriend(
+        ui->lineEdit_username->text(),
+        QHostAddress("::ffff:" + ui->lineEdit_serverIp->text()),
+        QHostAddress("::ffff:" + ui->lineEdit_friendIp->text())
+    );
     _chatw->show();
-}
-
-void MainWindow::on_btn_settings_clicked()
-{
-    SettingsData data;
-    SettingsWindow *settingsWindow = new SettingsWindow(data);
-
-    if (settingsWindow->exec()) {
-        emit updateSettings(data);
-    }
-}
-
-void MainWindow::on_btn_add_friend_clicked()
-{
-    AddFriendData data;
-    AddFriendWindow *addFriendWindow = new AddFriendWindow(data);
-
-    if (addFriendWindow->exec()) {
-        emit addFriend(data.friendIP);
-    }
 }
 

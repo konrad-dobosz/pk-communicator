@@ -16,6 +16,12 @@ public:
     explicit ChatWindow(QWidget *parent = nullptr);
     ~ChatWindow();
     void appendMessage(QString username, QString message);
+    void setUsername(QString username) {
+        _username = username;
+    }
+    void setFriendIpAddress(QHostAddress ip) {
+        _friendIp = ip;
+    }
 
 signals:
     void sendMessage(SocketMessage &msg);
@@ -25,6 +31,8 @@ private slots:
 
 private:
     Ui::ChatWindow *ui;
+    QHostAddress _friendIp = QHostAddress("127.0.0.1");
+    QString _username;
 };
 
 #endif // CHATWINDOW_H

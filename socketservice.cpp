@@ -8,14 +8,17 @@ SocketService::SocketService(QObject *parent):
     _loginw(LoginWindow()),
     _chatw(ChatWindow())
 {
-    _socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
-
-    _loginw.show();
+    //_loginw.show();
     _mainw.show();
 
     connect(&_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(&_loginw, SIGNAL(login(QString&,QString&)), this, SLOT(onLogin(QString&,QString&)));
     connect(&_chatw, SIGNAL(sendMessage(SocketMessage&)), this, SLOT(onSendMessage(SocketMessage&)));
+    connect(&_mainw,
+            SIGNAL(connectToFriend(QString, QHostAddress, QHostAddress)),
+            this,
+            SLOT(onConnectToFriend(QString, QHostAddress, QHostAddress))
+            );
 }
 
 void SocketService::onReadyRead() {
@@ -31,24 +34,22 @@ void SocketService::onReadyRead() {
 
     readStream >> type;
 
-    qDebug() << "TYPE READ: " << type;
+    //qDebug() << "TYPE READ: " << type;
 
     if (SocketDataType(type) == SocketDataType::loginResponse) {
         //SocketLogin sl;
 
-        qDebug() << "Login Response";
+        //qDebug() << "Login Response";
 
         //_loginw.hide();
         //_mainw.show();
 
     } else if (SocketDataType(type) == SocketDataType::message) {
-        qDebug() << "MSG";
+        //qDebug() << "MSG";
         SocketMessage data;
-
         readStream >> data;
 
         _chatw.appendMessage(data.getUsername(), data.getMessage());
-
     }
 }
 
@@ -60,19 +61,24 @@ void SocketService::write(QTcpSocket &socket, SocketData &data) {
     writeStream.device()->seek(0);
     writeStream << quint16(streamData.size() - sizeof(quint16));
 
-    qDebug() << "WRITE TYPE: " << (int)data.type();
+    //qDebug() << "WRITE TYPE: " << (int)data.type();
 
     socket.write(streamData);
     socket.waitForBytesWritten();
 }
 
 void SocketService::onLogin(QString& username, QString& password) {
-    //_socket.connectToHost(QHostAddress("127.0.0.1"), 4242);
-
     SocketLogin sLogin = SocketLogin(username, password);
     write(_socket, sLogin);
 }
 
 void SocketService::onSendMessage(SocketMessage &msg) {
     write(_socket, msg);
+}
+
+void SocketService::onConnectToFriend(QString username, QHostAddress serverIp, QHostAddress friendIp) {
+    _socket.connectToHost(serverIp, 4242);
+
+    _chatw.setUsername(username);
+    _chatw.setFriendIpAddress(friendIp);
 }

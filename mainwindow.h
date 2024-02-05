@@ -20,15 +20,18 @@ public:
     ~MainWindow();
 
 signals:
-    void addFriend(QString friendIP);
-    void updateSettings(SettingsData &data);
+//    void addFriend(QString friendIP);
+//    void updateSettings(SettingsData &data);
+    void connectToFriend(QString username, QHostAddress serverIp, QHostAddress friendIp);
 
 private slots:
-    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+//    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_btn_settings_clicked();
+//    void on_btn_settings_clicked();
 
-    void on_btn_add_friend_clicked();
+//    void on_btn_add_friend_clicked();
+
+    void on_btn_write_clicked();
 
 private:
     Ui::MainWindow *ui;

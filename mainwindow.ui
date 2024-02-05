@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>377</height>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,31 +16,98 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="btn_settings">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Nazwa użytkownika</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_username">
+          <property name="text">
+           <string>Student1</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Adres IP serwera</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_serverIp">
+          <property name="text">
+           <string>127.0.0.1</string>
+          </property>
+          <property name="placeholderText">
+           <string>Np.: 127.0.0.1</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Ustawienia</string>
+         <string>Adres IP drugiej instancji</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget">
-        <item>
-         <property name="text">
-          <string>Test user</string>
-         </property>
-        </item>
+       <widget class="QLineEdit" name="lineEdit_friendIp">
+        <property name="text">
+         <string>127.0.0.1</string>
+        </property>
+        <property name="placeholderText">
+         <string>Np.: 127.0.0.1</string>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_add_friend">
+       <widget class="QPushButton" name="btn_write">
         <property name="text">
-         <string>Dodaj znajomego</string>
+         <string>Pisz</string>
         </property>
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="btn_settings">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Ustawienia</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

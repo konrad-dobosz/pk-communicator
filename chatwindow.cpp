@@ -1,4 +1,5 @@
 #include "chatwindow.h"
+#include "qdatetime.h"
 #include "ui_chatwindow.h"
 
 ChatWindow::ChatWindow(QWidget *parent) :
@@ -19,7 +20,7 @@ void ChatWindow::on_pushButton_clicked()
 
     if (!message.isEmpty())
     {
-        SocketMessage msg(message);
+        SocketMessage msg(_friendIp, message, _username);
 
         emit sendMessage(msg);
 
