@@ -12,6 +12,9 @@ MainWindow::MainWindow(ChatWindow *chatw, QWidget *parent) :
     _chatw(chatw)
 {
     ui->setupUi(this);
+    ui->lineEdit_friendIp->setInputMask("999.900.900.900");
+    ui->lineEdit_serverIp->setInputMask("999.900.900.900");
+    ui->lineEdit_username->setInputMask("Xxxxxxxxxxxxxxxxx");
 }
 
 MainWindow::~MainWindow()
@@ -48,11 +51,15 @@ MainWindow::~MainWindow()
 void MainWindow::on_btn_write_clicked()
 {
     //_chatw->setFriendIpAddress(QHostAddress("::ffff:" + ui->lineEdit_friendip->text()));
-    emit connectToFriend(
-        ui->lineEdit_username->text(),
-        QHostAddress("::ffff:" + ui->lineEdit_serverIp->text()),
-        QHostAddress("::ffff:" + ui->lineEdit_friendIp->text())
-    );
-    _chatw->show();
+    QString serverIp = "::ffff:" + ui->lineEdit_serverIp->text().simplified();
+    QString friendIp = "::ffff:" + ui->lineEdit_friendIp->text().simplified();
+
+    QHostAddress serverAddress(serverIp);
+    QHostAddress friendAddress(friendIp);
+
+    if (!serverAddress.isNull() && !friendAddress.isNull()) {
+        emit connectToFriend(ui->lineEdit_username->text(),serverAddress, friendAddress);
+        _chatw->show();
+    }
 }
 

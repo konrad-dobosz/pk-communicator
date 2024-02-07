@@ -7,6 +7,7 @@ ChatWindow::ChatWindow(QWidget *parent) :
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
+    QWidget::setWindowTitle(_friendIp.toString());
 }
 
 ChatWindow::~ChatWindow()
