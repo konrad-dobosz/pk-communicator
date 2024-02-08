@@ -18,6 +18,7 @@ ChatWindow::~ChatWindow()
 void ChatWindow::on_pushButton_clicked()
 {
     QString message = ui->plainTextEdit->toPlainText();
+    ui->plainTextEdit->clear();
 
     if (!message.isEmpty())
     {
